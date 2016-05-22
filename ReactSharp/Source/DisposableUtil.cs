@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace react {
+namespace React {
 
   /// Maintains a list of disposables to allow mass operations on them.
   public class DisposableList : IDisposable {
@@ -41,13 +41,13 @@ namespace react {
     private List<IDisposable> _list; // lazily created
   }
 
-  /// Provides some {@link Disposable}-related utilities.
+  /// Provides some {@link IDisposable}-related utilities.
   public class DisposableUtil {
 
     /// A disposable which no-ops on {@link #Dispose} and throws an exception for all other methods.
     /// This is for the following code pattern:
     ///
-    /// <pre>{@code
+    /// <pre>
     /// IDisposable _conn = DisposableUtil.NOOP;
     /// void Open () {
     ///    _conn = whatever.connect(...);
@@ -55,7 +55,7 @@ namespace react {
     /// void Dispose () {
     ///    _conn = DisposableUtil.Dispose(_conn);
     /// }
-    /// }</pre>
+    /// </pre>
     ///
     /// In that it allows {@code Dispose} to avoid a null check if it's possible for {@code Dispose}
     /// to be called with no call to {@code Open} or repeatedly.

@@ -7,30 +7,30 @@ using System.Collections.Generic;
 
 namespace React {
 
-  /// Represents an asynchronous result. You cannot block on this result. You can {@link #Map} or
-  /// {@link #FlatMap} it, and listen for success or failure via the {@link #OnSuccess} and {@link
-  /// #OnFailure} methods.
+  /// Represents an asynchronous result. You cannot block on this result. You can <c>Map</c> or
+  /// <c>FlatMap</c> it, and listen for success or failure via the <c>OnSuccess</c> and
+  /// <c>OnFailure</c> methods.
   ///
-  /// <p> The benefit over just using {@code Callback} is that results can be composed. You can
+  /// <p> The benefit over just using <c>Callback</c> is that results can be composed. You can
   /// subscribe to an object, flatmap the result into a service call on that object which returns
   /// the address of another object, flat map that into a request to subscribe to that object, and
   /// finally pass the resulting object to some other code via a listener. Failure can be handled
   /// once for all of these operations and you avoid nesting yourself three callbacks deep. </p>
   public interface IFuture<out T> {
 
-    /// Causes {@code listener} to be notified if/when this future is completed with success. If it
+    /// Causes <c>listener</c> to be notified if/when this future is completed with success. If it
     /// has already succeeded, the listener will be notified immediately.
-    /// @return this future for chaining.
+    /// @return a handle via which the listener can be disconnected.
     IDisposable OnSuccess (OnValue<T> listener);
 
-    /// Causes {@code listener} to be notified if/when this future is completed with failure. If it
+    /// Causes <c>listener</c> to be notified if/when this future is completed with failure. If it
     /// has already failed, the listener will be notified immediately.
-    /// @return this future for chaining.
+    /// @return a handle via which the listener can be disconnected.
     IDisposable OnFailure (OnValue<Exception> listener);
 
-    /// Causes {@code listener} to be notified when this future is completed. If it has already
+    /// Causes <c>listener</c> to be notified when this future is completed. If it has already
     /// completed, the listener will be notified immediately.
-    /// @return this future for chaining.
+    /// @return a handle via which the listener can be disconnected.
     IDisposable OnComplete (OnValue<ITry<T>> listener);
 
     /// Returns whether this future is complete right now.
@@ -39,13 +39,13 @@ namespace React {
     /// Transforms this future by mapping its result upon arrival.
     IFuture<R> Transform<R> (Func<ITry<T>,ITry<R>> func);
 
-    /// Maps the value of a successful result using {@code func} upon arrival.
+    /// Maps the value of a successful result using <c>func</c> upon arrival.
     IFuture<R> Map<R> (Func<T, R> func);
 
-    // /// Maps the value of a failed result using {@code func} upon arrival.
+    // /// Maps the value of a failed result using <c>func</c> upon arrival.
     // IFuture<U> Recover<U> (Func<Exception, U> func) where T : U;
 
-    /// Maps a successful result to a new result using {@code func} when it arrives. Failure on the
+    /// Maps a successful result to a new result using <c>func</c> when it arrives. Failure on the
     /// original result or the mapped result are both dispatched to the mapped result. This is
     /// useful for chaining asynchronous actions. It's also known as monadic bind.
     IFuture<R> FlatMap<R> (Func<T, IFuture<R>> func);
@@ -69,45 +69,28 @@ namespace React {
       return new CompletedFuture<T>(result);
     }
 
-    /// Returns a future containing a list of all success results from {@code futures} if all of the
+    /// Returns a future containing a list of all success results from <c>futures</c> if all of the
     /// futures complete successfully, or a {@link AggregateException} aggregating all failures,
     /// if any of the futures fails.
     ///
-    /// <p>If {@code futures} is an ordered collection, the resulting list will match the order of
-    /// the futures. If not, result list is in {@code futures}' iteration order.</p>
+    /// <p>If <c>futures</c> is an ordered collection, the resulting list will match the order of
+    /// the futures. If not, result list is in <c>futures</c>' iteration order.</p>
     public static IFuture<List<T>> Sequence<T> (ICollection<IFuture<T>> futures) {
       // if we're passed an empty list of futures, succeed immediately with an empty list
       if (futures.Count == 0) return Future.Success(new List<T>());
       return new Sequencer<T>(futures).promise;
     }
 
-    /// Returns a future containing the results of {@code a} and {@code b} if both futures complete
+    /// Returns a future containing the results of <c>a</c> and <c>b</c> if both futures complete
     /// successfully, or an {@link AggregateException} aggregating all failures, if either of the
     /// futures fails.
     public static IFuture<Tuple<A,B>> Sequence<A,B> (IFuture<A> a, IFuture<B> b) {
       return new Sequencer<A,B>(a, b).promise;
     }
 
-    // /// Returns a future containing the results of {@code a}, {@code b}, and {@code c} if all
-    // /// futures complete successfully, or a {@link AggregateException} aggregating all failures,
-    // /// if any of the futures fails.
-    // public static <A,B,C> IFuture<T3<A,B,C>> sequence (IFuture<A> a, IFuture<B> b, IFuture<C> c) {
-    //   @SuppressWarnings("unchecked") Future<Object> oa = (Future<Object>)a;
-    //   @SuppressWarnings("unchecked") Future<Object> ob = (Future<Object>)b;
-    //   @SuppressWarnings("unchecked") Future<Object> oc = (Future<Object>)c;
-    //   return sequence(Arrays.asList(oa, ob, oc)).map(new Func<List<Object>,T3<A,B,C>>() {
-    //     public T3<A,B,C> apply (List<Object> results) {
-    //       @SuppressWarnings("unchecked") A a = (A)results.get(0);
-    //       @SuppressWarnings("unchecked") B b = (B)results.get(1);
-    //       @SuppressWarnings("unchecked") C c = (C)results.get(2);
-    //       return new T3<A,B,C>(a, b, c);
-    //     }
-    //   });
-    // }
-
-    /// Returns a future containing a list of all success results from {@code futures}. Any failure
+    /// Returns a future containing a list of all success results from <c>futures</c>. Any failure
     /// results are simply omitted from the list. The success results are also in no particular
-    /// order. If all of {@code futures} fail, the resulting list will be empty.
+    /// order. If all of <c>futures</c> fail, the resulting list will be empty.
     public static IFuture<ICollection<T>> Collect<T> (ICollection<IFuture<T>> futures) {
       // if we're passed an empty list of futures, succeed immediately with an empty list
       if (futures.Count == 0) return Future.Success(new List<T>());

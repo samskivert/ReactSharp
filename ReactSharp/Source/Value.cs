@@ -90,8 +90,8 @@ namespace React {
     private T _value;
   }
 
-  /// Handles the machinery of connecting listeners to a value and notifying them, without exposing
-  /// a public interface for updating the value. This can be used by libraries which wish to provide
+  /// Handles the machinery of connecting listeners to a value and notifying them. Does not expose a
+  /// public interface for updating the value. This can be used by libraries which wish to provide
   /// observable values, but must manage the maintenance and distribution of value updates
   /// themselves (so that they may send them over the network, for example).
   public abstract class AbstractValue<T> : IValue<T> {
@@ -178,7 +178,7 @@ namespace React {
     }
 
     /// Updates the value contained in this instance and notifies registered listeners iff said
-    /// value is not equal to the value already contained in this instance (per {@link #areEqual}).
+    /// value is not equal to the value already contained in this instance.
     protected T UpdateAndNotifyIf (T newValue) {
       return UpdateAndNotify(newValue, false);
     }
@@ -191,7 +191,7 @@ namespace React {
 
     /// Updates the value contained in this instance and notifies registered listeners.
     /// @param force if true, the listeners will always be notified, if false the will be notified
-    /// only if the new value is not equal to the old value (per {@link #areEqual}).
+    /// only if the new value is not equal to the old value.
     /// @return the previously contained value.
     private T UpdateAndNotify (T value, bool force) {
       T ovalue = UpdateLocal(value);

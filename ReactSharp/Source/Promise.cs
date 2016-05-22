@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace React {
 
-  /// Provides a concrete implementation of {@link Future} that can be updated with a success or
+  /// Provides a concrete implementation of {@link IFuture} that can be updated with a success or
   /// failure result when it becomes available.
   ///
   /// <p>This implementation also guarantees a useful behavior, which is that all listeners added
