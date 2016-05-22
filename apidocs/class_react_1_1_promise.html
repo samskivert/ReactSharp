@@ -72,14 +72,17 @@ Inheritance diagram for React.Promise&lt; T &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adbd1b32f6d4bf94683b1db75207bc7c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_promise.html#adbd1b32f6d4bf94683b1db75207bc7c0">Succeed</a> (T value)</td></tr>
-<tr class="memdesc:adbd1b32f6d4bf94683b1db75207bc7c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes this promise to be completed successfully with {.  <a href="#adbd1b32f6d4bf94683b1db75207bc7c0">More...</a><br /></td></tr>
+<tr class="memitem:adbd1b32f6d4bf94683b1db75207bc7c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbd1b32f6d4bf94683b1db75207bc7c0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_promise.html#adbd1b32f6d4bf94683b1db75207bc7c0">Succeed</a> (T value)</td></tr>
+<tr class="memdesc:adbd1b32f6d4bf94683b1db75207bc7c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes this promise to be completed successfully with <code>value</code>. <br /></td></tr>
 <tr class="separator:adbd1b32f6d4bf94683b1db75207bc7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebc0e90de930101790eec7fefa968519"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_promise.html#aebc0e90de930101790eec7fefa968519">Fail</a> (Exception cause)</td></tr>
-<tr class="memdesc:aebc0e90de930101790eec7fefa968519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes this promise to be completed with failure caused by {.  <a href="#aebc0e90de930101790eec7fefa968519">More...</a><br /></td></tr>
+<tr class="memitem:aebc0e90de930101790eec7fefa968519"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aebc0e90de930101790eec7fefa968519"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_promise.html#aebc0e90de930101790eec7fefa968519">Fail</a> (Exception cause)</td></tr>
+<tr class="memdesc:aebc0e90de930101790eec7fefa968519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes this promise to be completed with failure caused by <code>cause</code>. <br /></td></tr>
 <tr class="separator:aebc0e90de930101790eec7fefa968519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a489ddd11982e1c92fa0261d2801f971a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_promise.html#a489ddd11982e1c92fa0261d2801f971a">Complete</a> (<a class="el" href="interface_react_1_1_i_try.html">ITry</a>&lt; T &gt; result)</td></tr>
-<tr class="memdesc:a489ddd11982e1c92fa0261d2801f971a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes this promise to be completed with {.  <a href="#a489ddd11982e1c92fa0261d2801f971a">More...</a><br /></td></tr>
+<tr class="memitem:a489ddd11982e1c92fa0261d2801f971a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a489ddd11982e1c92fa0261d2801f971a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_promise.html#a489ddd11982e1c92fa0261d2801f971a">Complete</a> (<a class="el" href="interface_react_1_1_i_try.html">ITry</a>&lt; T &gt; result)</td></tr>
+<tr class="memdesc:a489ddd11982e1c92fa0261d2801f971a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Causes this promise to be completed with <code>result</code>. <br /></td></tr>
 <tr class="separator:a489ddd11982e1c92fa0261d2801f971a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3661b44b02148e5afa074d62821d4e68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3661b44b02148e5afa074d62821d4e68"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_promise.html#a3661b44b02148e5afa074d62821d4e68">HasConnections</a> ()</td></tr>
@@ -149,62 +152,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inte
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides a concrete implementation of <a class="el" href="interface_react_1_1_i_future.html">IFuture</a> that can be updated with a success or failure result when it becomes available.</p>
 <p>This implementation also guarantees a useful behavior, which is that all listeners added prior to the completion of the promise will be cleared when the promise is completed, and no further listeners will be retained. This allows the promise to be retained after is has been completed as a useful "box" for its underlying value, without concern that references to long satisfied listeners will be inadvertently retained.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a489ddd11982e1c92fa0261d2801f971a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_react_1_1_promise.html">React.Promise</a>&lt; T &gt;.Complete </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_react_1_1_i_try.html">ITry</a>&lt; T &gt;&#160;</td>
-          <td class="paramname"><em>result</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Causes this promise to be completed with {. </p>
-<div class="fragment"><div class="line">result}. </div></div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="aebc0e90de930101790eec7fefa968519"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_react_1_1_promise.html">React.Promise</a>&lt; T &gt;.Fail </td>
-          <td>(</td>
-          <td class="paramtype">Exception&#160;</td>
-          <td class="paramname"><em>cause</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Causes this promise to be completed with failure caused by {. </p>
-<div class="fragment"><div class="line">cause}. </div></div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="adbd1b32f6d4bf94683b1db75207bc7c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_react_1_1_promise.html">React.Promise</a>&lt; T &gt;.Succeed </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Causes this promise to be completed successfully with {. </p>
-<div class="fragment"><div class="line">value}. </div></div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>Source/Promise.cs</li>
 </ul>
 </div><!-- contents -->

@@ -47,6 +47,7 @@
     <ul class="tablist">
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
       <li><a href="functions_prop.html"><span>Properties</span></a></li>
     </ul>
   </div>
@@ -55,9 +56,11 @@
       <li><a href="#index_a"><span>a</span></a></li>
       <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_e"><span>e</span></a></li>
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_j"><span>j</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
@@ -98,6 +101,14 @@
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>Dispose()
 : <a class="el" href="class_react_1_1_disposable_list.html#ae83cf8415b7f8a5ee22428da667d06ca">React.DisposableList</a>
+, <a class="el" href="class_react_1_1_disposable_util.html#afe9a45f41997328c8775b20ae65405c7">React.DisposableUtil</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
+<li>Emit()
+: <a class="el" href="class_react_1_1_signal.html#aa087b90c48ed1216f07108a635cad039">React.Signal&lt; T &gt;</a>
 </li>
 </ul>
 
@@ -105,6 +116,9 @@
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
 <li>Fail()
 : <a class="el" href="class_react_1_1_promise.html#aebc0e90de930101790eec7fefa968519">React.Promise&lt; T &gt;</a>
+</li>
+<li>Filter()
+: <a class="el" href="interface_react_1_1_i_signal.html#ac37d6dae7c5fc8cb414db517d844d732">React.ISignal&lt; out out T &gt;</a>
 </li>
 <li>FlatMap&lt; M &gt;()
 : <a class="el" href="interface_react_1_1_i_value.html#abb88b1e423d5a76703f0cb4d1035d493">React.IValue&lt; out out T &gt;</a>
@@ -118,7 +132,8 @@
 
 <h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
 <li>HasConnections()
-: <a class="el" href="class_react_1_1_abstract_value.html#afee4251d05697eb4fb5d9cd0af0aa17f">React.AbstractValue&lt; T &gt;</a>
+: <a class="el" href="class_react_1_1_abstract_signal.html#af48bcf97ebc79aae1a03868170fe36a9">React.AbstractSignal&lt; T &gt;</a>
+, <a class="el" href="class_react_1_1_abstract_value.html#afee4251d05697eb4fb5d9cd0af0aa17f">React.AbstractValue&lt; T &gt;</a>
 , <a class="el" href="class_react_1_1_promise.html#a3661b44b02148e5afa074d62821d4e68">React.Promise&lt; T &gt;</a>
 </li>
 </ul>
@@ -137,9 +152,17 @@
 </ul>
 
 
+<h3><a class="anchor" id="index_j"></a>- j -</h3><ul>
+<li>Join()
+: <a class="el" href="class_react_1_1_disposable_util.html#a5f7d224c4219f9da7d0ef61d91dee918">React.DisposableUtil</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>Map&lt; M &gt;()
-: <a class="el" href="interface_react_1_1_i_value.html#a6c5956218bc2d5061bb597cc5e56c22d">React.IValue&lt; out out T &gt;</a>
+: <a class="el" href="interface_react_1_1_i_signal.html#a0ff2d756d7dff07fd73de8273906d528">React.ISignal&lt; out out T &gt;</a>
+, <a class="el" href="interface_react_1_1_i_value.html#a6c5956218bc2d5061bb597cc5e56c22d">React.IValue&lt; out out T &gt;</a>
 </li>
 <li>Map&lt; R &gt;()
 : <a class="el" href="interface_react_1_1_i_future.html#afe819b37247b337ec4eb842cc450c231">React.IFuture&lt; out out T &gt;</a>
@@ -149,8 +172,17 @@
 
 
 <h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
+<li>Next()
+: <a class="el" href="interface_react_1_1_i_signal.html#a5cf928f223a4f65690ee421697856c82">React.ISignal&lt; out out T &gt;</a>
+</li>
+<li>NOOP
+: <a class="el" href="class_react_1_1_disposable_util.html#a5e6bce944fc9b257126d9640fa5266dd">React.DisposableUtil</a>
+</li>
 <li>NotifyChange()
 : <a class="el" href="class_react_1_1_abstract_value.html#a1f23e3f1f9a835e8aa3945795e3e60a6">React.AbstractValue&lt; T &gt;</a>
+</li>
+<li>NotifyEmit()
+: <a class="el" href="class_react_1_1_abstract_signal.html#a86e409d563ea9bc7b92bdfdbe6cd9568">React.AbstractSignal&lt; T &gt;</a>
 </li>
 </ul>
 
@@ -164,6 +196,9 @@
 </li>
 <li>OnComplete()
 : <a class="el" href="interface_react_1_1_i_future.html#a2c496927fab02c7a93915d4db9769336">React.IFuture&lt; out out T &gt;</a>
+</li>
+<li>OnEmit()
+: <a class="el" href="interface_react_1_1_i_signal.html#a064bdf4a56ed696c211dc87aad8bedf6">React.ISignal&lt; out out T &gt;</a>
 </li>
 <li>OnFailure()
 : <a class="el" href="interface_react_1_1_i_future.html#aff48af0ead26228e5372ba3fd2c39a9e">React.IFuture&lt; out out T &gt;</a>

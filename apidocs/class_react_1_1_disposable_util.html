@@ -49,6 +49,10 @@
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="class_react_1_1_disposable_util-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">React.DisposableUtil Class Reference</div>  </div>
 </div><!--header-->
@@ -56,9 +60,81 @@
 
 <p>Provides some <a class="el" href="">IDisposable</a>-related utilities.  
  <a href="class_react_1_1_disposable_util.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a5f7d224c4219f9da7d0ef61d91dee918"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f7d224c4219f9da7d0ef61d91dee918"></a>
+static IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_disposable_util.html#a5f7d224c4219f9da7d0ef61d91dee918">Join</a> (params IDisposable[] disps)</td></tr>
+<tr class="memdesc:a5f7d224c4219f9da7d0ef61d91dee918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a closable that closes multiple connections at once. <br /></td></tr>
+<tr class="separator:a5f7d224c4219f9da7d0ef61d91dee918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe9a45f41997328c8775b20ae65405c7"><td class="memItemLeft" align="right" valign="top">static IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_disposable_util.html#afe9a45f41997328c8775b20ae65405c7">Dispose</a> (IDisposable disp)</td></tr>
+<tr class="separator:afe9a45f41997328c8775b20ae65405c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a5e6bce944fc9b257126d9640fa5266dd"><td class="memItemLeft" align="right" valign="top">static readonly IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_react_1_1_disposable_util.html#a5e6bce944fc9b257126d9640fa5266dd">NOOP</a> = <a class="el" href="class_react_1_1_disposable_util.html#a5f7d224c4219f9da7d0ef61d91dee918">Join</a>()</td></tr>
+<tr class="separator:a5e6bce944fc9b257126d9640fa5266dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides some <a class="el" href="">IDisposable</a>-related utilities. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="afe9a45f41997328c8775b20ae65405c7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IDisposable React.DisposableUtil.Dispose </td>
+          <td>(</td>
+          <td class="paramtype">IDisposable&#160;</td>
+          <td class="paramname"><em>disp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Disposes <code>disp</code> and returns <code>NOOP</code>. This enables code like: <code>disp = DisposableUtil.Dispose(disp);</code> which simplifies disconnecting a given connection reference and resetting it to <code>NOOP</code>. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a5e6bce944fc9b257126d9640fa5266dd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">readonly IDisposable React.DisposableUtil.NOOP = <a class="el" href="class_react_1_1_disposable_util.html#a5f7d224c4219f9da7d0ef61d91dee918">Join</a>()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A disposable which no-ops on <code>Dispose</code> and throws an exception for all other methods. This is for the following code pattern:</p>
+<pre>
+IDisposable _conn = <a class="el" href="class_react_1_1_disposable_util.html#a5e6bce944fc9b257126d9640fa5266dd">DisposableUtil.NOOP</a>;
+void Open () {
+   _conn = whatever.connect(...);
+}
+void Dispose () {
+   _conn = DisposableUtil.Dispose(_conn);
+}
+</pre><p>In that it allows <code>Dispose</code> to avoid a null check if it's possible for <code>Dispose</code> to be called with no call to <code>Open</code> or repeatedly. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>Source/DisposableUtil.cs</li>
 </ul>
 </div><!-- contents -->
