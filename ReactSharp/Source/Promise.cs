@@ -20,17 +20,17 @@ namespace React {
     private OnValue<ITry<T>> _onComplete;
     private ITry<T> _result;
 
-    /// Causes this promise to be completed successfully with {@code value}.
+    /// Causes this promise to be completed successfully with <c>value</c>.
     public void Succeed (T value) {
       Complete(Try.Success(value));
     }
 
-    /// Causes this promise to be completed with failure caused by {@code cause}.
+    /// Causes this promise to be completed with failure caused by <c>cause</c>.
     public void Fail (Exception cause) {
       Complete(Try.Failure<T>(cause));
     }
 
-    /// Causes this promise to be completed with {@code result}.
+    /// Causes this promise to be completed with <c>result</c>.
     public void Complete (ITry<T> result) {
       if (_result != null) throw new InvalidOperationException("Already completed");
       _result = result;

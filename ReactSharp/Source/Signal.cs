@@ -36,7 +36,7 @@ namespace React {
     IDisposable OnEmit (OnValue<T> slot);
   }
 
-  /// A signal that emits events of type {@code T}. {@link Slot}s may be connected to a signal to be
+  /// A signal that emits events of type <c>T</c>. Listeners may be connected to a signal to be
   /// notified upon event emission.
   public class Signal<T> : AbstractSignal<T> {
 
@@ -44,16 +44,6 @@ namespace React {
     public void Emit (T value) {
       NotifyEmit(value);
     }
-
-    // /// Returns a slot which can be used to wire this signal to the emissions of a {@link Signal} or
-    // /// another value.
-    // public Slot<T> Slot () {
-    //   return new Slot<T> () {
-    //     @Override public void onEmit (T value) {
-    //       Emit(value);
-    //     }
-    //   };
-    // }
   }
 
   /// Handles the machinery of connecting slots to a signal and emitting events to them, without

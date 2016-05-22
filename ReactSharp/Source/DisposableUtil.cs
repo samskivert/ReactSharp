@@ -44,7 +44,7 @@ namespace React {
   /// Provides some {@link IDisposable}-related utilities.
   public class DisposableUtil {
 
-    /// A disposable which no-ops on {@link #Dispose} and throws an exception for all other methods.
+    /// A disposable which no-ops on <c>Dispose</c> and throws an exception for all other methods.
     /// This is for the following code pattern:
     ///
     /// <pre>
@@ -57,18 +57,18 @@ namespace React {
     /// }
     /// </pre>
     ///
-    /// In that it allows {@code Dispose} to avoid a null check if it's possible for {@code Dispose}
-    /// to be called with no call to {@code Open} or repeatedly.
+    /// In that it allows <c>Dispose</c> to avoid a null check if it's possible for <c>Dispose</c>
+    /// to be called with no call to <c>Open</c> or repeatedly.
     public static readonly IDisposable NOOP = Join();
 
-    /// Creates a closable that closes multiple connections at once. */
+    /// Creates a closable that closes multiple connections at once.
     public static IDisposable Join (params IDisposable[] disps) {
       return new JoinedDisposables(disps);
     }
 
-    /// Disposes {@code disp} and returns {@link #NOOP}. This enables code like:
-    /// {@code disp = DisposableUtil.Dispose(disp);} which simplifies disconnecting and
-    /// resetting to {@link #NOOP}, a given connection reference.
+    /// Disposes <c>disp</c> and returns <c>NOOP</c>. This enables code like:
+    /// <c>disp = DisposableUtil.Dispose(disp);</c>
+    /// which simplifies disconnecting a given connection reference and resetting it to <c>NOOP</c>.
     public static IDisposable Dispose (IDisposable disp) {
       disp.Dispose();
       return NOOP;
