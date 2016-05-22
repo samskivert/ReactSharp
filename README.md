@@ -5,7 +5,7 @@ ReactSharp is a library that provides async and [functional reactive programming
 It can serve as the basis for a user interface toolkit, or any other library that has a model on
 which clients will listen and to which they will react.
 
-* [API docs](http://samskivert.github.com/ReactSharp/apidocs/) are available.
+* [API docs](http://samskivert.github.com/ReactSharp/apidocs/annotated.html) are available.
 
 Core Concepts
 -------------
