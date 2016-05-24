@@ -39,6 +39,11 @@ namespace React {
     /// Returns a signal that emits events when this value changes.
     ISignal<T> Changes ();
 
+    /// Returns a future which is completed with this value when the value meets <c>cond</c>. If the
+    /// value meets <c>cond</c> now, the future will be completed immediately, otherwise the future
+    /// will be completed when the value changes to a value which meets <c>cond</c>.
+    IFuture<T> When (Func<T,bool> cond);
+
     /// Connects the supplied listener to this value. It will be notified when this value changes.
     /// The listener is held by a strong reference, so it's held in memory by virtue of being
     /// connected.
@@ -113,6 +118,12 @@ namespace React {
 
     public ISignal<T> Changes () {
       return new ChangesSignal<T>(this);
+    }
+
+    public IFuture<T> When (Func<T,bool> cond) {
+      var current = Current;
+      if (cond(current)) return Future.Success(current);
+      else return Changes().Filter(cond).Next();
     }
 
     public IDisposable OnChange (OnChange<T> listener) {
