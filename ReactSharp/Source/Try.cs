@@ -6,15 +6,8 @@ using System;
 
 namespace React {
 
-  /// Represents a computation that either provided a result, or failed with an exception. Monadic
-  /// methods are provided that allow one to map and compose tries in ways that propagate failure.
-  /// This class is not itself "reactive", but it facilitates a more straightforward interface and
-  /// implementation for {@link IFuture} and {@link Promise}.
-  public interface ITry<out T> {
-
-    /// Returns the value associated with a successful try, or rethrows the exception if the try
-    /// failed.
-    T Value { get; }
+  /// Contains the untyped parts of ITry.
+  public interface ITry {
 
     /// Returns the cause of failure for a failed try. Throws <c>InvalidOperationException</c> if
     /// called on a successful try.
@@ -25,6 +18,17 @@ namespace React {
 
     /// Returns try if this is a failed try, false if it is a successful try.
     bool IsFailure { get; }
+  }
+
+  /// Represents a computation that either provided a result, or failed with an exception. Monadic
+  /// methods are provided that allow one to map and compose tries in ways that propagate failure.
+  /// This class is not itself "reactive", but it facilitates a more straightforward interface and
+  /// implementation for {@link IFuture} and {@link Promise}.
+  public interface ITry<out T> : ITry {
+
+    /// Returns the value associated with a successful try, or rethrows the exception if the try
+    /// failed.
+    T Value { get; }
 
     /// Maps successful tries through <c>func</c>, passees failure through as is.
     ITry<R> Map<R> (Func<T, R> func);

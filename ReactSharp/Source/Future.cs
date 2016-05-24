@@ -7,6 +7,18 @@ using System.Collections.Generic;
 
 namespace React {
 
+  /// Contains the untyped parts of IFuture.
+  public interface IFuture {
+
+    /// Causes <c>listener</c> to be notified if/when this future is completed with failure. If it
+    /// has already failed, the listener will be notified immediately.
+    /// @return a handle via which the listener can be disconnected.
+    IDisposable OnFailure (OnValue<Exception> listener);
+
+    /// Returns whether this future is complete right now.
+    bool IsComplete { get; }
+  }
+
   /// Represents an asynchronous result. You cannot block on this result. You can <c>Map</c> or
   /// <c>FlatMap</c> it, and listen for success or failure via the <c>OnSuccess</c> and
   /// <c>OnFailure</c> methods.
@@ -16,25 +28,17 @@ namespace React {
   /// the address of another object, flat map that into a request to subscribe to that object, and
   /// finally pass the resulting object to some other code via a listener. Failure can be handled
   /// once for all of these operations and you avoid nesting yourself three callbacks deep. </p>
-  public interface IFuture<out T> {
+  public interface IFuture<out T> : IFuture {
 
     /// Causes <c>listener</c> to be notified if/when this future is completed with success. If it
     /// has already succeeded, the listener will be notified immediately.
     /// @return a handle via which the listener can be disconnected.
     IDisposable OnSuccess (OnValue<T> listener);
 
-    /// Causes <c>listener</c> to be notified if/when this future is completed with failure. If it
-    /// has already failed, the listener will be notified immediately.
-    /// @return a handle via which the listener can be disconnected.
-    IDisposable OnFailure (OnValue<Exception> listener);
-
     /// Causes <c>listener</c> to be notified when this future is completed. If it has already
     /// completed, the listener will be notified immediately.
     /// @return a handle via which the listener can be disconnected.
     IDisposable OnComplete (OnValue<ITry<T>> listener);
-
-    /// Returns whether this future is complete right now.
-    bool IsComplete { get; }
 
     /// Transforms this future by mapping its result upon arrival.
     IFuture<R> Transform<R> (Func<ITry<T>,ITry<R>> func);
