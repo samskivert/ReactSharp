@@ -151,11 +151,19 @@ namespace React {
     public IFuture<R> Transform<R> (Func<ITry<T>,ITry<R>> func) {
       Promise<R> xf = new Promise<R>();
       OnComplete(result => {
+        ITry<R> xresult;
+        // catch any exception while transforming the result and fail the transformed future if
+        // one is thrown, but...
         try {
-          xf.Complete(func(result));
+          xresult = func(result);
         } catch (Exception t) {
           xf.Fail(t);
+          return;
         }
+        // ...don't catch exceptions caused thrown due to actually completing our transformed
+        // future, let those propagate out to the completer of the original future just like any
+        // other failing listener
+        xf.Complete(xresult);
       });
       return xf;
     }
