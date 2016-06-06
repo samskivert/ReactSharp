@@ -19,8 +19,8 @@ namespace React {
 
       public void Bind<T> (IFuture<T> future) {
         Reset();
-        future.OnSuccess(v => { successes += 1; });
-        future.OnFailure(e => { failures += 1; });
+        future.OnComplete(v => { successes += 1; },
+                          e => { failures += 1; });
         future.OnComplete(r => { completes += 1; });
       }
 

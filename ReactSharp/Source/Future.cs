@@ -40,6 +40,12 @@ namespace React {
     /// @return a handle via which the listener can be disconnected.
     IDisposable OnComplete (OnValue<ITry<T>> listener);
 
+    /// Causes <c>onSuccess</c> to be notified when this future is successfully or <c>onFailure</c>
+    /// to be notified when this future fails. If it has already completed, the appropriate listener
+    /// will be notified immediately.
+    /// @return a handle via which the listener can be disconnected.
+    IDisposable OnComplete (OnValue<T> onSuccess, OnValue<Exception> onFailure);
+
     /// Transforms this future by mapping its result upon arrival.
     IFuture<R> Transform<R> (Func<ITry<T>,ITry<R>> func);
 
@@ -132,6 +138,13 @@ namespace React {
     public IDisposable OnFailure (OnValue<Exception> listener) {
       return OnComplete(result => {
         if (result.IsFailure) listener(result.Cause);
+      });
+    }
+
+    public IDisposable OnComplete (OnValue<T> onSuccess, OnValue<Exception> onFailure) {
+      return OnComplete(result => {
+        if (result.IsSuccess) onSuccess(result.Value);
+        else onFailure(result.Cause);
       });
     }
 
