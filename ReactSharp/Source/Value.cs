@@ -59,6 +59,17 @@ namespace React {
     IDisposable OnChangeNotify (OnChange<T> listener);
   }
 
+  /// Utility methods for Value.
+  public static class Value {
+
+    /// Creates a <c>Value</c> with the supplied starting value. Due to the way C# type inference
+    /// works, this allows us to avoid specifying the (potentially long) type parameter twice in a
+    /// member declaration.
+    public static Value<T> Create<T> (T init) {
+      return new Value<T>(init);
+    }
+  }
+
   /// A container for a single value, which may be observed for changes.
   public class Value<T> : AbstractValue<T> {
 
