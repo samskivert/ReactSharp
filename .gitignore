@@ -1,43 +1,8 @@
-# Unity .meta files
-*.meta
-
-#Autosave files
-*~
-
-#build
+# Build files & depends
 [Oo]bj/
 [Bb]in/
 packages/
 TestResults/
 
-# globs
-Makefile.in
-*.DS_Store
-*.sln.cache
-*.suo
-*.cache
-*.pidb
-*.userprefs
-*.usertasks
-config.log
-config.make
-config.status
-aclocal.m4
-install-sh
-autom4te.cache/
-*.user
-*.tar.gz
-tarballs/
-test-results/
-Thumbs.db
-
-#Mac bundle stuff
-*.dmg
-*.app
-
-#resharper
-*_Resharper.*
-*.Resharper
-
-#dotCover
-*.dotCover
+# Unity .meta files
+*.meta
