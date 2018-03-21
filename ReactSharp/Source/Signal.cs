@@ -34,6 +34,12 @@ namespace React {
     ///
     /// @return a handle can be used to cancel the connection.
     IDisposable OnEmit (OnValue<T> slot);
+
+    /// Connects this signal to the supplied unit slot, such that when an event is emitted from this
+    /// signal, the slot will be notified.
+    ///
+    /// @return a handle can be used to cancel the connection.
+    IDisposable OnEmit (Action unitSlot);
   }
 
   /// A signal that emits events of type <c>T</c>. Listeners may be connected to a signal to be
@@ -69,6 +75,9 @@ namespace React {
         result.Succeed(value);
       });
       return result;
+    }
+    public IDisposable OnEmit (Action unitSlot) {
+      return OnEmit((T value) => { unitSlot(); });
     }
     public IDisposable OnEmit (OnValue<T> slot) {
       _onEmit += slot;

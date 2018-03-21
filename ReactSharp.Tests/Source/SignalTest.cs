@@ -19,6 +19,12 @@ namespace React {
           notifies += 1;
         };
       }
+
+      public Action Increment () {
+        return () => {
+          notifies += 1;
+        };
+      }
     }
 
     public class Accum<T> {
@@ -249,6 +255,17 @@ namespace React {
 
       signal.Emit(null);
       signal.Emit("foozle");
+      Assert.AreEqual(1, counter.notifies);
+    }
+
+    [Test] public void testUnitSlot () {
+      var signal = new Signal<string>();
+      var counter = new Counter();
+
+      var connection = signal.OnEmit(counter.Increment());
+      signal.Emit("foozle");
+      connection.Dispose();
+      signal.Emit("barzle");
       Assert.AreEqual(1, counter.notifies);
     }
   }
