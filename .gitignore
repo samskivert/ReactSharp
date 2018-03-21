@@ -1,3 +1,6 @@
+# Unity .meta files
+*.meta
+
 #Autosave files
 *~
 
