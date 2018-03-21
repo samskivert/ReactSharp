@@ -39,6 +39,7 @@
     <Compile Include="Source\Future.cs" />
     <Compile Include="Source\Promise.cs" />
     <Compile Include="Source\Try.cs" />
+    <Compile Include="Source\Unit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

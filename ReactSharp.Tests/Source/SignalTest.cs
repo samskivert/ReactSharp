@@ -258,6 +258,17 @@ namespace React {
       Assert.AreEqual(1, counter.notifies);
     }
 
+    [Test] public void testUnitSignal () {
+      var signal = new UnitSignal();
+      var counter = new Counter();
+      var connection = signal.OnEmit(counter.Increment());
+      signal.Emit();
+      connection.Dispose();
+      signal.Emit();
+      Assert.AreEqual(1, counter.notifies);
+      Assert.False(signal.HasConnections());
+    }
+
     [Test] public void testUnitSlot () {
       var signal = new Signal<string>();
       var counter = new Counter();
@@ -267,6 +278,7 @@ namespace React {
       connection.Dispose();
       signal.Emit("barzle");
       Assert.AreEqual(1, counter.notifies);
+      Assert.False(signal.HasConnections());
     }
   }
 }

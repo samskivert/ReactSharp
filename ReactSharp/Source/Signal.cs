@@ -38,6 +38,15 @@ namespace React {
     IDisposable OnEmit (Action unitSlot);
   }
 
+  /// A view of a {@link UnitSignal} on which slots may listen, but to which one cannot emit events.
+  public interface IUnitSignal : ISignal<Unit> {
+
+    /// Creates a signal that maps this unit signal via a function. When this signal emits a value, the
+    /// mapped signal will emit that value as transformed by the supplied function. The mapped
+    /// signal will retain a connection to this signal for as long as it has connections of its own.
+    ISignal<M> Map<M> (Func<M> func);
+  }
+
   /// A signal that emits events of type <c>T</c>. Listeners may be connected to a signal to be
   /// notified upon event emission.
   public class Signal<T> : AbstractSignal<T> {
@@ -45,6 +54,20 @@ namespace React {
     /// Causes this signal to emit the supplied event to connected slots.
     public void Emit (T value) {
       NotifyEmit(value);
+    }
+  }
+
+  /// A signal that emits value-less events. Listeners may be connected to a signal to be
+  /// notified upon event emission.
+  public class UnitSignal : AbstractSignal<Unit>, IUnitSignal {
+
+    /// Causes this signal to emit to connected slots.
+    public void Emit () {
+      NotifyEmit(Unit.Default);
+    }
+
+    public ISignal<M> Map<M> (Func<M> func) {
+      return Map(value => func());
     }
   }
 
