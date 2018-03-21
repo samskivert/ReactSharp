@@ -14,8 +14,14 @@ namespace React {
 
     public class Counter {
       public int notifies;
-      public OnValue<T> Increment<T> () {
+      public Action<T> Increment<T> () {
         return (value) => {
+          notifies += 1;
+        };
+      }
+
+      public Action Increment () {
+        return () => {
           notifies += 1;
         };
       }
@@ -24,7 +30,7 @@ namespace React {
     public class Accum<T> {
       public List<T> values = new List<T>();
 
-      public OnValue<T> Adder () {
+      public Action<T> Adder () {
         return (value) => {
           values.Add(value);
         };
@@ -36,7 +42,7 @@ namespace React {
       }
     }
 
-    public static OnValue<T> Require<T> (T reqValue) {
+    public static Action<T> Require<T> (T reqValue) {
       return (value) => {
         Assert.AreEqual(reqValue, value);
       };
@@ -250,6 +256,29 @@ namespace React {
       signal.Emit(null);
       signal.Emit("foozle");
       Assert.AreEqual(1, counter.notifies);
+    }
+
+    [Test] public void testUnitSignal () {
+      var signal = new UnitSignal();
+      var counter = new Counter();
+      var connection = signal.OnEmit(counter.Increment());
+      signal.Emit();
+      connection.Dispose();
+      signal.Emit();
+      Assert.AreEqual(1, counter.notifies);
+      Assert.False(signal.HasConnections());
+    }
+
+    [Test] public void testUnitSlot () {
+      var signal = new Signal<string>();
+      var counter = new Counter();
+
+      var connection = signal.OnEmit(counter.Increment());
+      signal.Emit("foozle");
+      connection.Dispose();
+      signal.Emit("barzle");
+      Assert.AreEqual(1, counter.notifies);
+      Assert.False(signal.HasConnections());
     }
   }
 }

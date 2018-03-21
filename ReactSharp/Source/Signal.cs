@@ -7,10 +7,6 @@ using System.Collections.Generic;
 
 namespace React {
 
-  /// Called when a signal to which this delegate is connected has emitted an event.
-  /// @param value the value emitted by the signal.
-  public delegate void OnValue<in T> (T value);
-
   /// A view of a {@link Signal}, on which slots may listen, but to which one cannot emit events.
   /// This is generally used to provide signal-like views of changing entities. See {@link
   /// AbstractValue} for an example.
@@ -33,7 +29,22 @@ namespace React {
     /// signal, the slot will be notified.
     ///
     /// @return a handle can be used to cancel the connection.
-    IDisposable OnEmit (OnValue<T> slot);
+    IDisposable OnEmit (Action<T> slot);
+
+    /// Connects this signal to the supplied unit slot, such that when an event is emitted from this
+    /// signal, the slot will be notified.
+    ///
+    /// @return a handle can be used to cancel the connection.
+    IDisposable OnEmit (Action unitSlot);
+  }
+
+  /// A view of a {@link UnitSignal} on which slots may listen, but to which one cannot emit events.
+  public interface IUnitSignal : ISignal<Unit> {
+
+    /// Creates a signal that maps this unit signal via a function. When this signal emits a value, the
+    /// mapped signal will emit that value as transformed by the supplied function. The mapped
+    /// signal will retain a connection to this signal for as long as it has connections of its own.
+    ISignal<M> Map<M> (Func<M> func);
   }
 
   /// A signal that emits events of type <c>T</c>. Listeners may be connected to a signal to be
@@ -43,6 +54,20 @@ namespace React {
     /// Causes this signal to emit the supplied event to connected slots.
     public void Emit (T value) {
       NotifyEmit(value);
+    }
+  }
+
+  /// A signal that emits value-less events. Listeners may be connected to a signal to be
+  /// notified upon event emission.
+  public class UnitSignal : AbstractSignal<Unit>, IUnitSignal {
+
+    /// Causes this signal to emit to connected slots.
+    public void Emit () {
+      NotifyEmit(Unit.Default);
+    }
+
+    public ISignal<M> Map<M> (Func<M> func) {
+      return Map(value => func());
     }
   }
 
@@ -70,13 +95,16 @@ namespace React {
       });
       return result;
     }
-    public IDisposable OnEmit (OnValue<T> slot) {
+    public IDisposable OnEmit (Action unitSlot) {
+      return OnEmit((T value) => { unitSlot(); });
+    }
+    public IDisposable OnEmit (Action<T> slot) {
       _onEmit += slot;
       ConnectionAdded();
       return new Connection(this, slot);
     }
 
-    private void RemoveConnection (OnValue<T> slot) {
+    private void RemoveConnection (Action<T> slot) {
       _onEmit -= slot;
       ConnectionRemoved();
     }
@@ -86,9 +114,9 @@ namespace React {
 
     private class Connection : IDisposable {
       private AbstractSignal<T> _signal;
-      private OnValue<T> _listener;
+      private Action<T> _listener;
 
-      public Connection (AbstractSignal<T> signal, OnValue<T> listener) {
+      public Connection (AbstractSignal<T> signal, Action<T> listener) {
         _signal = signal;
         _listener = listener;
       }
@@ -106,7 +134,7 @@ namespace React {
       if (_onEmit != null) {
         var lners = _onEmit.GetInvocationList();
         List<Exception> errors = null;
-        foreach (OnValue<T> lner in lners) {
+        foreach (Action<T> lner in lners) {
           try {
             lner(value);
           } catch (Exception e) {
@@ -118,7 +146,7 @@ namespace React {
       }
     }
 
-    private OnValue<T> _onEmit;
+    private Action<T> _onEmit;
   }
 
   /// Plumbing to implement dependent signals in such a way that they automatically manage a

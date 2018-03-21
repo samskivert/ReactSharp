@@ -2,10 +2,9 @@
 // ReactSharp - a library for async & FRP-ish programming in C#
 // http://github.com/samskivert/ReactSharp/blob/master/LICENSE
 
-using NUnit.Framework;
-using System.Collections.Generic;
 using System;
 using System.Diagnostics;
+using NUnit.Framework;
 
 namespace React {
 
@@ -19,7 +18,7 @@ namespace React {
           notifies += 1;
         };
       }
-      public OnValue<T> OnValue<T> () {
+      public Action<T> Action<T> () {
         return (value) => {
           notifies += 1;
         };
@@ -57,7 +56,7 @@ namespace React {
     [Test] public void testChangesNext () {
       var value = new Value<int>(42);
       var counter = new Counter();
-      value.Changes().Next().OnSuccess(counter.OnValue<int>());
+      value.Changes().Next().OnSuccess(counter.Action<int>());
       value.Update(15);
       value.Update(42);
       Assert.AreEqual(1, counter.notifies);

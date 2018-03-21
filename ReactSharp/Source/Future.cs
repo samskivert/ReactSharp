@@ -13,7 +13,7 @@ namespace React {
     /// Causes <c>listener</c> to be notified if/when this future is completed with failure. If it
     /// has already failed, the listener will be notified immediately.
     /// @return a handle via which the listener can be disconnected.
-    IDisposable OnFailure (OnValue<Exception> listener);
+    IDisposable OnFailure (Action<Exception> listener);
 
     /// Returns whether this future is complete right now.
     bool IsComplete { get; }
@@ -33,18 +33,18 @@ namespace React {
     /// Causes <c>listener</c> to be notified if/when this future is completed with success. If it
     /// has already succeeded, the listener will be notified immediately.
     /// @return a handle via which the listener can be disconnected.
-    IDisposable OnSuccess (OnValue<T> listener);
+    IDisposable OnSuccess (Action<T> listener);
 
     /// Causes <c>listener</c> to be notified when this future is completed. If it has already
     /// completed, the listener will be notified immediately.
     /// @return a handle via which the listener can be disconnected.
-    IDisposable OnComplete (OnValue<ITry<T>> listener);
+    IDisposable OnComplete (Action<ITry<T>> listener);
 
     /// Causes <c>onSuccess</c> to be notified when this future is successfully or <c>onFailure</c>
     /// to be notified when this future fails. If it has already completed, the appropriate listener
     /// will be notified immediately.
     /// @return a handle via which the listener can be disconnected.
-    IDisposable OnComplete (OnValue<T> onSuccess, OnValue<Exception> onFailure);
+    IDisposable OnComplete (Action<T> onSuccess, Action<Exception> onFailure);
 
     /// Transforms this future by mapping its result upon arrival.
     IFuture<R> Transform<R> (Func<ITry<T>,ITry<R>> func);
@@ -108,7 +108,7 @@ namespace React {
       var pseq = new Promise<ICollection<T>>();
       var results = new List<T>();
       var remain = futures.Count;
-      OnValue<ITry<T>> collector = result => {
+      Action<ITry<T>> collector = result => {
         if (result.IsSuccess) results.Add(result.Value);
         if (--remain == 0) pseq.Succeed(results);
       };
@@ -125,23 +125,23 @@ namespace React {
   /// Handles some of the standard plumbing for futures.
   public abstract class AbstractFuture<T> : IFuture<T> {
 
-    public abstract IDisposable OnComplete (OnValue<ITry<T>> listener);
+    public abstract IDisposable OnComplete (Action<ITry<T>> listener);
 
     public abstract bool IsComplete { get; }
 
-    public IDisposable OnSuccess (OnValue<T> listener) {
+    public IDisposable OnSuccess (Action<T> listener) {
       return OnComplete(result => {
         if (result.IsSuccess) listener(result.Value);
       });
     }
 
-    public IDisposable OnFailure (OnValue<Exception> listener) {
+    public IDisposable OnFailure (Action<Exception> listener) {
       return OnComplete(result => {
         if (result.IsFailure) listener(result.Cause);
       });
     }
 
-    public IDisposable OnComplete (OnValue<T> onSuccess, OnValue<Exception> onFailure) {
+    public IDisposable OnComplete (Action<T> onSuccess, Action<Exception> onFailure) {
       return OnComplete(result => {
         if (result.IsSuccess) onSuccess(result.Value);
         else onFailure(result.Cause);
@@ -199,7 +199,7 @@ namespace React {
     }
 
     override public bool IsComplete { get { return true; } }
-    override public IDisposable OnComplete (OnValue<ITry<T>> listener) {
+    override public IDisposable OnComplete (Action<ITry<T>> listener) {
       listener(_result);
       return Future.NOOP;
     }

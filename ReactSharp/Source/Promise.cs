@@ -17,7 +17,7 @@ namespace React {
   /// satisfied listeners will be inadvertently retained.</p>
   public class Promise<T> : AbstractFuture<T> {
 
-    private OnValue<ITry<T>> _onComplete;
+    private Action<ITry<T>> _onComplete;
     private ITry<T> _result;
 
     /// Causes this promise to be completed successfully with <c>value</c>.
@@ -39,7 +39,7 @@ namespace React {
         try {
           var lners = _onComplete.GetInvocationList();
           List<Exception> errors = null;
-          foreach (OnValue<ITry<T>> lner in lners) {
+          foreach (Action<ITry<T>> lner in lners) {
             try {
               lner(_result);
             } catch (Exception e) {
@@ -59,7 +59,7 @@ namespace React {
 
     public override bool IsComplete { get { return _result != null; } }
 
-    public override IDisposable OnComplete (OnValue<ITry<T>> listener) {
+    public override IDisposable OnComplete (Action<ITry<T>> listener) {
       var result = _result;
       if (result != null) {
         listener(result);
@@ -74,7 +74,7 @@ namespace React {
     protected virtual void ConnectionAdded () {}
     protected virtual void ConnectionRemoved () {}
 
-    private void RemoveConnection (OnValue<ITry<T>> listener) {
+    private void RemoveConnection (Action<ITry<T>> listener) {
       if (_onComplete != null) {
         _onComplete -= listener;
       }
@@ -83,9 +83,9 @@ namespace React {
 
     private class Connection : IDisposable {
       private Promise<T> _promise;
-      private OnValue<ITry<T>> _listener;
+      private Action<ITry<T>> _listener;
 
-      public Connection (Promise<T> promise, OnValue<ITry<T>> listener) {
+      public Connection (Promise<T> promise, Action<ITry<T>> listener) {
         _promise = promise;
         _listener = listener;
       }
