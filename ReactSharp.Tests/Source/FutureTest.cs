@@ -2,10 +2,9 @@
 // ReactSharp - a library for async & FRP-ish programming in C#
 // http://github.com/samskivert/ReactSharp/blob/master/LICENSE
 
-using NUnit.Framework;
-using System.Collections.Generic;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace React {
 

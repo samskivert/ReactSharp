@@ -14,7 +14,7 @@ namespace React {
 
     public class Counter {
       public int notifies;
-      public OnValue<T> Increment<T> () {
+      public Action<T> Increment<T> () {
         return (value) => {
           notifies += 1;
         };
@@ -30,7 +30,7 @@ namespace React {
     public class Accum<T> {
       public List<T> values = new List<T>();
 
-      public OnValue<T> Adder () {
+      public Action<T> Adder () {
         return (value) => {
           values.Add(value);
         };
@@ -42,7 +42,7 @@ namespace React {
       }
     }
 
-    public static OnValue<T> Require<T> (T reqValue) {
+    public static Action<T> Require<T> (T reqValue) {
       return (value) => {
         Assert.AreEqual(reqValue, value);
       };
