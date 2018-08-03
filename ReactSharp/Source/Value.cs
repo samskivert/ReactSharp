@@ -74,7 +74,7 @@ namespace React {
   public class Value<T> : AbstractValue<T> {
 
     /// Creates an instance with the supplied starting value.
-    public Value (T init) {
+    public Value (T init = default(T)) {
       // we can't have any listeners at this point, so no need to notify
       _value = init;
     }
